@@ -15,7 +15,9 @@ import {
     Cpu,
     Coffee,
     Copy,
-    Shield
+    Shield,
+    Terminal,
+    Rocket
 } from 'lucide-react';
 import styles from './Sidebar.module.css';
 
@@ -49,16 +51,22 @@ const Sidebar = () => {
         {
             title: 'HOMEBREW',
             items: [
-                { name: 'Homebrew Manager', path: '/homebrew', icon: Coffee }, // Placeholder path
+                { name: 'Homebrew Manager', icon: Terminal, path: '/homebrew' },
+            ]
+        },
+        {
+            title: 'ARCADE',
+            items: [
+                { name: 'Arcade Mode', icon: Rocket, path: '/arcade' },
             ]
         },
         {
             title: 'ADVANCED',
             items: [
-                { name: 'Duplicate Finder', path: '/duplicates', icon: Copy }, // Placeholder path
-                { name: 'Privacy Guard', path: '/privacy', icon: Shield }, // Placeholder path
+                { name: 'Duplicate Finder', icon: Copy, path: '/duplicates' },
+                { name: 'Privacy Guard', icon: Shield, path: '/privacy' },
             ]
-        },
+        }
     ];
 
     return (

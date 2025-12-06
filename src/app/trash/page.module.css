@@ -52,30 +52,38 @@
     margin-bottom: 24px;
 }
 
+/* Mattr Glas Primary Button */
 .emptyAllBtn {
-    background: var(--color-accent-red);
-    /* Red for destructive functionality */
+    background: rgba(255, 59, 48, 0.75);
+    /* Red for destructive action */
     color: white;
-    border: none;
-    border-radius: 24px;
+    min-width: 160px;
     padding: 14px 40px;
+    border-radius: 24px;
     font-size: 16px;
     font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 4px 16px rgba(255, 59, 48, 0.3);
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .emptyAllBtn:hover:not(:disabled) {
-    transform: scale(1.02);
-    box-shadow: 0 6px 16px rgba(255, 59, 48, 0.4);
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(255, 59, 48, 0.9);
+    box-shadow: 0 8px 24px rgba(255, 59, 48, 0.5);
 }
 
 .emptyAllBtn:disabled {
-    background: rgba(0, 0, 0, 0.1);
-    color: rgba(0, 0, 0, 0.3);
+    background: var(--color-surface-elevated);
+    color: var(--color-text-secondary);
+    border-color: transparent;
+    backdrop-filter: none;
     box-shadow: none;
-    cursor: default;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 .list {

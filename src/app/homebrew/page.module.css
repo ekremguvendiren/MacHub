@@ -21,6 +21,44 @@
     font-weight: 700;
 }
 
+/* Mattr Glas Primary Button */
+.updateBtn,
+.cleanupBtn {
+    background: rgba(0, 122, 255, 0.65);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.updateBtn:hover:not(:disabled),
+.cleanupBtn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(0, 122, 255, 0.85);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4);
+}
+
+.updateBtn:disabled,
+.cleanupBtn:disabled {
+    background: var(--color-surface-elevated);
+    color: var(--color-text-secondary);
+    border-color: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 .badge {
     background: rgba(0, 0, 0, 0.05);
     padding: 4px 8px;
@@ -173,4 +211,18 @@
 
 .uptodate {
     color: var(--color-accent-green);
+}
+
+.spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import { File, Video, Image, Box, ArrowUpDown } from 'lucide-react';
 
 type FileItem = {
-    id: number;
+    id: string;
     name: string;
     path: string;
     size: number;
@@ -15,13 +15,29 @@ type FileItem = {
 };
 
 export default function LargeFilesPage() {
-    const [files, setFiles] = useState<FileItem[]>([
-        { id: 1, name: 'Project_Backup.zip', path: '/Users/User/Documents', size: 2400, sizeStr: '2.4 GB', type: 'archive', lastAccess: '8 months ago' },
-        { id: 2, name: 'Holiday_Movie.mov', path: '/Users/User/Movies', size: 1800, sizeStr: '1.8 GB', type: 'video', lastAccess: '1 year ago' },
-        { id: 3, name: 'Raw_Photos_Export', path: '/Users/User/Pictures', size: 950, sizeStr: '950 MB', type: 'image', lastAccess: '7 months ago' },
-        { id: 4, name: 'Old_Installer.dmg', path: '/Users/User/Downloads', size: 620, sizeStr: '620 MB', type: 'other', lastAccess: '9 months ago' },
-        { id: 5, name: 'Screen_Recording.mp4', path: '/Users/User/Desktop', size: 450, sizeStr: '450 MB', type: 'video', lastAccess: '6 months ago' },
-    ]);
+    const [files, setFiles] = useState<FileItem[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const res = await fetch('/api/system/scan', {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'scan-large' })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    setFiles(data.files);
+                }
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFiles();
+    }, []);
 
     const [sortKey, setSortKey] = useState<keyof FileItem>('size');
     const [sortDesc, setSortDesc] = useState(true);

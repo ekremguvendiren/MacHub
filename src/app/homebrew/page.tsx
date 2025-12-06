@@ -1,43 +1,65 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import { Package, Download, RefreshCw, Trash2, Terminal } from 'lucide-react';
 
-export default function HomebrewPage() {
-    const [packages, setPackages] = useState([
-        { id: 1, name: 'wget', version: '1.21.3', latest: '1.21.4', type: 'Formula', outdated: true },
-        { id: 2, name: 'node', version: '20.5.0', latest: '20.6.0', type: 'Formula', outdated: true },
-        { id: 3, name: 'visual-studio-code', version: '1.81.0', latest: '1.82.0', type: 'Cask', outdated: true },
-        { id: 4, name: 'google-chrome', version: '116.0.5845.110', latest: '116.0.5845.110', type: 'Cask', outdated: false },
-        { id: 5, name: 'git', version: '2.41.0', latest: '2.41.0', type: 'Formula', outdated: false },
-    ]);
+type BrewPackage = {
+    name: string;
+    version: string;
+    latest: string;
+    type: string;
+    outdated: boolean;
+};
 
+export default function HomebrewPage() {
+    const [packages, setPackages] = useState<BrewPackage[]>([]);
+    const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState('');
 
-    const handleUpdate = () => {
+    const fetchOutdated = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/homebrew', {
+                method: 'POST',
+                body: JSON.stringify({ command: 'outdated' })
+            });
+            const data = await res.json();
+            if (data.success && data.packages) {
+                setPackages(data.packages);
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchOutdated();
+    }, []);
+
+    const handleUpdate = async () => {
         setStatus('Updating Homebrew...');
-        setTimeout(() => {
-            setStatus('Homebrew Updated!');
-            setTimeout(() => setStatus(''), 2000);
-        }, 2000);
+        await fetch('/api/homebrew', { method: 'POST', body: JSON.stringify({ command: 'update' }) });
+        setStatus('Homebrew Updated!');
+        setTimeout(() => setStatus(''), 2000);
+        fetchOutdated();
     };
 
-    const handleUpgrade = () => {
+    const handleUpgrade = async () => {
         setStatus('Upgrading packages...');
-        setTimeout(() => {
-            setPackages(packages.map(p => ({ ...p, version: p.latest, outdated: false })));
-            setStatus('Upgrade Complete!');
-            setTimeout(() => setStatus(''), 2000);
-        }, 2500);
+        await fetch('/api/homebrew', { method: 'POST', body: JSON.stringify({ command: 'upgrade' }) });
+        setStatus('Upgrade Complete!');
+        setTimeout(() => setStatus(''), 2000);
+        fetchOutdated();
     };
 
-    const handleCleanup = () => {
+    const handleCleanup = async () => {
         setStatus('Running cleanup...');
-        setTimeout(() => {
-            setStatus('Cleanup Complete! Freed 450MB.');
-            setTimeout(() => setStatus(''), 2000);
-        }, 1500);
+        await fetch('/api/homebrew', { method: 'POST', body: JSON.stringify({ command: 'cleanup' }) });
+        setStatus('Cleanup Complete!');
+        setTimeout(() => setStatus(''), 2000);
     };
 
     const outdatedCount = packages.filter(p => p.outdated).length;
@@ -56,13 +78,13 @@ export default function HomebrewPage() {
             </header>
 
             <div className={styles.actions}>
-                <button className={styles.actionBtn} onClick={handleUpdate}>
-                    <RefreshCw size={18} /> Check for Updates
+                <button className={styles.actionBtn} onClick={handleUpdate} disabled={!!status}>
+                    <RefreshCw size={18} className={status ? styles.spin : ''} /> Check for Updates
                 </button>
-                <button className={styles.actionBtn} onClick={handleUpgrade} disabled={outdatedCount === 0}>
+                <button className={styles.actionBtn} onClick={handleUpgrade} disabled={outdatedCount === 0 || !!status}>
                     <Download size={18} /> Upgrade All ({outdatedCount})
                 </button>
-                <button className={styles.actionBtn} onClick={handleCleanup}>
+                <button className={styles.actionBtn} onClick={handleCleanup} disabled={!!status}>
                     <Trash2 size={18} /> Cleanup
                 </button>
             </div>
@@ -78,8 +100,12 @@ export default function HomebrewPage() {
                     <span>Status</span>
                 </div>
                 <div className={styles.list}>
-                    {packages.map(pkg => (
-                        <div key={pkg.id} className={styles.item}>
+                    {loading ? (
+                        <div style={{ padding: 20, textAlign: 'center' }}>Loading packages...</div>
+                    ) : packages.length === 0 ? (
+                        <div style={{ padding: 20, textAlign: 'center' }}>No outdated packages found.</div>
+                    ) : packages.map((pkg, idx) => (
+                        <div key={idx} className={styles.item}>
                             <div className={styles.name}>
                                 <Package size={16} className={styles.pkgIcon} />
                                 {pkg.name}

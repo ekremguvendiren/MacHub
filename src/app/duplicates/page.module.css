@@ -158,6 +158,43 @@
     color: var(--color-text-secondary);
 }
 
+/* Mattr Glas Primary Button */
+.scanBtn,
+.cleanBtn {
+    position: relative;
+    background: rgba(0, 122, 255, 0.65);
+    color: white;
+    min-width: 160px;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.25);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.scanBtn:hover:not(:disabled),
+.cleanBtn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(0, 122, 255, 0.85);
+    box-shadow: 0 8px 24px rgba(0, 122, 255, 0.4);
+}
+
+.scanBtn:disabled,
+.cleanBtn:disabled {
+    background: var(--color-surface-elevated);
+    color: var(--color-text-secondary);
+    border-color: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 .originalBadge {
     background: var(--color-accent-green);
     color: white;

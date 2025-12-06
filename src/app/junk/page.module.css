@@ -19,7 +19,7 @@
     color: var(--color-text-secondary);
 }
 
-.scanState {
+.scanArea {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -28,40 +28,89 @@
     gap: 32px;
 }
 
-.scanIconBg {
-    width: 120px;
-    height: 120px;
-    background: rgba(0, 122, 255, 0.1);
-    border-radius: 50%;
+.meter {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: var(--color-accent);
 }
 
-.actionButton {
-    background: var(--color-accent);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 12px 32px;
+.meterValue {
+    font-size: 64px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--color-accent) 0%, #34c759 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.meterLabel {
     font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
-    transition: all 0.2s;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
-.actionButton:hover:not(:disabled) {
-    transform: scale(1.02);
-    background: #0066d6;
+/* Mattr Glas Primary Button */
+.scanBtn {
+    position: relative;
+    background: rgba(0, 122, 255, 0.65);
+    /* Vibrant Acccent with Transparency */
+    color: white;
+    min-width: 200px;
+    padding: 16px 32px;
+    border-radius: 24px;
+    /* Large Rounded Corners */
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Subtle Border */
+    backdrop-filter: blur(20px) saturate(180%);
+    /* Vibrancy/Glass Effect */
+    box-shadow: 0 8px 32px rgba(0, 122, 255, 0.35);
+    /* Glow Shadow */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.scanBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.scanBtn:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.02);
+    background: rgba(0, 122, 255, 0.85);
+    box-shadow: 0 12px 40px rgba(0, 122, 255, 0.5);
+}
+
+.scanBtn:disabled {
+    background: var(--color-surface-elevated);
+    color: var(--color-text-secondary);
+    border-color: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 .results {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 .list {
@@ -69,7 +118,7 @@
     overflow-y: auto;
     border: 1px solid var(--color-border);
     border-radius: 12px;
-    background: white;
+    background: var(--color-surface);
     margin-bottom: 20px;
 }
 
@@ -87,43 +136,41 @@
 .itemIcon {
     color: var(--color-text-secondary);
     margin-right: 16px;
+    margin-left: 12px;
 }
 
 .itemInfo {
     flex: 1;
+    min-width: 0;
 }
 
 .itemName {
     font-weight: 500;
     margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.itemDesc {
-    font-size: 12px;
+.itemPath {
+    font-size: 11px;
     color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .itemSize {
     font-weight: 600;
     color: var(--color-text-secondary);
-    margin-right: 16px;
+    margin-left: 16px;
+    min-width: 60px;
+    text-align: right;
 }
 
-.check {
+.checkbox {
     width: 18px;
     height: 18px;
     accent-color: var(--color-accent);
-}
-
-.footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 16px;
-    border-top: 1px solid var(--color-border);
-}
-
-.summary span {
-    font-weight: 700;
-    color: var(--color-text-primary);
+    cursor: pointer;
 }

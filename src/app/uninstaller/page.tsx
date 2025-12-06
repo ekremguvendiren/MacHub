@@ -1,85 +1,122 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import { Package, Trash2, HardDrive, AlertTriangle } from 'lucide-react';
+import { AppWindow, Trash2, HardDrive, Clock } from 'lucide-react';
+
+type AppItem = {
+    id: string;
+    name: string;
+    path: string;
+    icon: string;
+    size: string;
+    lastUsed: string;
+    selected: boolean;
+};
 
 export default function UninstallerPage() {
-    const [apps, setApps] = useState([
-        { id: 1, name: 'Adobe Photoshop 2024', size: '4.2 GB', lastUsed: '2 days ago', selected: false },
-        { id: 2, name: 'Microsoft Word', size: '1.8 GB', lastUsed: '1 week ago', selected: false },
-        { id: 3, name: 'Spotify', size: '450 MB', lastUsed: 'Yesterday', selected: false },
-        { id: 4, name: 'Zoom', size: '280 MB', lastUsed: 'Today', selected: false },
-        { id: 5, name: 'Old Game Demo', size: '12 GB', lastUsed: '2 years ago', selected: false },
-    ]);
+    const [apps, setApps] = useState<AppItem[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [cleaned, setCleaned] = useState(false);
 
-    const toggleSelect = (id: number) => {
+    useEffect(() => {
+        fetchApps();
+    }, []);
+
+    const fetchApps = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/apps');
+            const data = await res.json();
+            if (data.success) {
+                setApps(data.apps || []);
+            }
+        } catch (e) {
+            console.error(e);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleUninstall = async () => {
+        const selectedApps = apps.filter(a => a.selected);
+        if (selectedApps.length === 0) return;
+
+        await fetch('/api/apps', {
+            method: 'POST',
+            body: JSON.stringify({ action: 'delete', apps: selectedApps })
+        });
+
+        setCleaned(true);
+        setTimeout(() => {
+            setCleaned(false);
+            fetchApps();
+        }, 2000);
+    };
+
+    const toggleApp = (id: string) => {
         setApps(apps.map(app => app.id === id ? { ...app, selected: !app.selected } : app));
     };
 
     const selectedCount = apps.filter(a => a.selected).length;
-    const selectedSize = apps
-        .filter(a => a.selected)
-        .reduce((acc, curr) => {
-            // Mock math
-            const val = parseFloat(curr.size);
-            return acc + (curr.size.includes('GB') ? val * 1024 : val);
-        }, 0);
-
-    const displaySelectedSize = selectedSize > 1024
-        ? `${(selectedSize / 1024).toFixed(1)} GB`
-        : `${selectedSize.toFixed(0)} MB`;
 
     return (
         <div className={styles.container}>
             <header className={styles.header}>
-                <h1 className={styles.title}>Uninstaller</h1>
-                <p className={styles.subtitle}>Completely remove apps and their leftovers.</p>
+                <h1 className={styles.title}>App Uninstaller</h1>
+                <p className={styles.subtitle}>Remove unwanted applications and their leftovers.</p>
             </header>
 
-            <div className={styles.listContainer}>
+            <div className={styles.content}>
                 <div className={styles.listHeader}>
-                    <span>Application</span>
-                    <span>Last Used</span>
-                    <span>Size</span>
-                    <span>Action</span>
+                    <div className={styles.colName}>Name</div>
+                    <div className={styles.colSize}>Size</div>
+                    <div className={styles.colLastUsed}>Last Used</div>
                 </div>
-                <div className={styles.list}>
-                    {apps.map(app => (
-                        <div key={app.id} className={`${styles.item} ${app.selected ? styles.selected : ''}`}>
-                            <div className={styles.appInfo}>
-                                <div className={styles.appIconPlaceholder} />
-                                <span className={styles.appName}>{app.name}</span>
-                            </div>
-                            <div className={styles.meta}>{app.lastUsed}</div>
-                            <div className={styles.meta}>{app.size}</div>
-                            <div className={styles.action}>
-                                <label className={styles.checkboxWrapper}>
-                                    <input
-                                        type="checkbox"
-                                        checked={app.selected}
-                                        onChange={() => toggleSelect(app.id)}
-                                    />
-                                    <span className={styles.customCheckbox}></span>
-                                </label>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
 
-            <div className={styles.footer}>
-                <div className={styles.stats}>
-                    <Package className={styles.statsIcon} size={20} />
-                    <span>{selectedCount} apps selected ({displaySelectedSize})</span>
+                <div className={styles.list}>
+                    {loading ? (
+                        <div className={styles.loading}>Scanning Applications...</div>
+                    ) : cleaned ? (
+                        <div className={styles.success}>Apps Uninstalled Successfully!</div>
+                    ) : apps.length === 0 ? (
+                        <div className={styles.loading}>No apps found in standard locations.</div>
+                    ) : (
+                        apps.map(app => (
+                            <div key={app.id} className={`${styles.item} ${app.selected ? styles.selected : ''}`} onClick={() => toggleApp(app.id)}>
+                                <input
+                                    type="checkbox"
+                                    checked={app.selected}
+                                    onChange={() => toggleApp(app.id)}
+                                    className={styles.checkbox}
+                                    onClick={(e) => e.stopPropagation()}
+                                />
+                                <div className={styles.appIcon}>
+                                    <AppWindow size={24} />
+                                </div>
+                                <div className={styles.appName}>
+                                    <div className={styles.name}>{app.name}</div>
+                                    <div className={styles.path}>{app.path}</div>
+                                </div>
+                                <div className={styles.appSize}>{app.size}</div>
+                                <div className={styles.appLastUsed}>{app.lastUsed}</div>
+                            </div>
+                        ))
+                    )}
                 </div>
-                <button
-                    className={styles.uninstallBtn}
-                    disabled={selectedCount === 0}
-                    onClick={() => alert(`Uninstalling ${selectedCount} apps...`)}
-                >
-                    {selectedCount > 0 ? `Uninstall ${selectedCount} Apps` : 'Select Apps'}
-                </button>
+
+                <footer className={styles.footer}>
+                    <div className={styles.summary}>
+                        <span>{selectedCount}</span> apps selected
+                    </div>
+                    <button
+                        className={styles.uninstallBtn}
+                        onClick={handleUninstall}
+                        disabled={selectedCount === 0 || loading || cleaned}
+                    >
+                        {cleaned ? 'Done' : 'Uninstall'}
+                    </button>
+                </footer>
             </div>
         </div>
     );
