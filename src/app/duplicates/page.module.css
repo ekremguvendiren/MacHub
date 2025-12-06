@@ -1,0 +1,184 @@
+.container {
+    padding: 32px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--color-text-secondary);
+}
+
+.dropZone {
+    flex: 1;
+    border: 2px dashed var(--color-border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.dropZone:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: var(--color-accent);
+}
+
+.dropIconBg {
+    width: 100px;
+    height: 100px;
+    background: rgba(0, 122, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    margin-bottom: 24px;
+}
+
+.dropTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.dropSub {
+    color: var(--color-text-secondary);
+}
+
+.scanning {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.results {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.group {
+    margin-bottom: 24px;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+}
+
+.groupHeader {
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.02);
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+.fileItem {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.fileItem:last-child {
+    border-bottom: none;
+}
+
+.original {
+    background: rgba(52, 199, 89, 0.05);
+    /* Slight green tint for original */
+}
+
+.fileIcon {
+    margin-right: 16px;
+    color: var(--color-text-secondary);
+}
+
+.fileInfo {
+    flex: 1;
+}
+
+.fileName {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.filePath {
+    font-size: 11px;
+    color: var(--color-text-secondary);
+}
+
+.fileMeta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+}
+
+.originalBadge {
+    background: var(--color-accent-green);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.footer {
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.cleanBtn {
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 32px;
+    font-weight: 600;
+    cursor: pointer;
+}

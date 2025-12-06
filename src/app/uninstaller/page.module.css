@@ -1,0 +1,183 @@
+.container {
+    padding: 32px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--color-text-secondary);
+}
+
+.listContainer {
+    flex: 1;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.listHeader {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 80px;
+    padding: 12px 24px;
+    background: rgba(0, 0, 0, 0.02);
+    border-bottom: 1px solid var(--color-border);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 80px;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.2s;
+}
+
+.item:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.selected {
+    background: rgba(0, 122, 255, 0.05);
+}
+
+.appInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.appIconPlaceholder {
+    width: 32px;
+    height: 32px;
+    background: #eee;
+    border-radius: 8px;
+}
+
+.appName {
+    font-weight: 500;
+}
+
+.meta {
+    font-size: 13px;
+    color: var(--color-text-secondary);
+}
+
+.action {
+    display: flex;
+    justify-content: center;
+}
+
+.checkboxWrapper {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.checkboxWrapper input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.customCheckbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.checkboxWrapper input:checked~.customCheckbox {
+    background-color: var(--color-accent-red);
+    border-color: var(--color-accent-red);
+}
+
+.customCheckbox:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 3px;
+    width: 5px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkboxWrapper input:checked~.customCheckbox:after {
+    display: block;
+}
+
+.footer {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.statsIcon {
+    color: var(--color-text-secondary);
+}
+
+.uninstallBtn {
+    background: var(--color-accent-red);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(255, 59, 48, 0.2);
+    transition: all 0.2s;
+}
+
+.uninstallBtn:disabled {
+    background: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.3);
+    box-shadow: none;
+    cursor: default;
+}
+
+.uninstallBtn:hover:not(:disabled) {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+}

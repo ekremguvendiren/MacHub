@@ -1,0 +1,27 @@
+.container {
+    padding: 32px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: var(--color-text-secondary);
+}
+
+.list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    /* Space for scrollbar */
+}

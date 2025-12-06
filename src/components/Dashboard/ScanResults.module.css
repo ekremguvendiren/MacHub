@@ -1,0 +1,69 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.result {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.number {
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--color-accent);
+}
+
+.label {
+    font-size: 24px;
+    color: var(--color-text-secondary);
+}
+
+.details {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+    text-align: center;
+    max-width: 400px;
+}
+
+.cleanButton {
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 16px 64px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+    transition: all 0.2s;
+}
+
+.cleanButton:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(0, 122, 255, 0.4);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
