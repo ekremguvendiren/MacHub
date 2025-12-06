@@ -50,8 +50,10 @@ const startNextServer = () => {
         const checkServer = () => {
             http.get(BASE_URL, (res) => {
                 if (res.statusCode === 200) {
+                    console.log('checkServer: Server is ready (200 OK)');
                     resolve();
                 } else {
+                    console.log(`checkServer: Server responded with status ${res.statusCode}, retrying...`);
                     retry();
                 }
             }).on('error', () => {
@@ -73,6 +75,7 @@ const startNextServer = () => {
 };
 
 const createWindow = () => {
+    console.log('createWindow: Init');
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
@@ -84,8 +87,11 @@ const createWindow = () => {
         vibrancy: 'under-window', // Mac vibrancy
         visualEffectState: 'active',
     });
+    console.log('createWindow: BrowserView created');
 
+    console.log(`createWindow: Loading URL ${BASE_URL}`);
     mainWindow.loadURL(BASE_URL);
+    console.log('createWindow: URL loaded (async)');
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -94,8 +100,11 @@ const createWindow = () => {
 
 app.on('ready', async () => {
     try {
+        console.log('App ready, starting server...');
         await startNextServer();
+        console.log('Server started, creating window...');
         createWindow();
+        console.log('Window created.');
     } catch (e) {
         console.error('App init error:', e);
     }
