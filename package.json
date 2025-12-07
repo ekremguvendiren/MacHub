@@ -48,8 +48,9 @@
     },
     "asarUnpack": [
       "server.js",
-      "node_modules/next/**/*",
-      ".next/**/*"
+      "node_modules/**/*",
+      ".next/**/*",
+      "package.json"
     ],
     "files": [
       "main/**/*",
@@ -66,5 +67,10 @@
     "directories": {
       "output": "dist"
     }
+  },
+  "overrides": {
+    "glob": "^10.4.5",
+    "rimraf": "^5.0.0",
+    "inflight": "^1.0.6"
   }
 }
