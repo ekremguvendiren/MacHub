@@ -20,11 +20,16 @@ const startNextServer = () => {
                 path.join(app.getAppPath(), '.next/standalone/server.js'),
                 // 2. Unpacked resources (if extraResources is used)
                 path.join(process.resourcesPath, '.next/standalone/server.js'),
-                // 3. Nested deeper in app.asar (common with some configs)
+                // 3. ASAR Unpacked (Critical for separate server.js)
+                ...(app.getAppPath().endsWith('.asar') ? [
+                    path.join(app.getAppPath().replace(/\.asar$/, '.asar.unpacked'), 'server.js'),
+                    path.join(app.getAppPath().replace(/\.asar$/, '.asar.unpacked'), '.next/standalone/server.js')
+                ] : []),
+                // 4. Nested deeper in app.asar (common with some configs)
                 path.join(app.getAppPath(), 'server/.next/standalone/server.js'),
-                // 4. Nested in resources
+                // 5. Nested in resources
                 path.join(process.resourcesPath, 'server/.next/standalone/server.js'),
-                // 5. Dev / Local structure
+                // 6. Dev / Local structure
                 path.join(__dirname, '../.next/standalone/server.js'),
                 path.join(process.cwd(), '.next/standalone/server.js'),
             ];
