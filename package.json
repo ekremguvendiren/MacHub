@@ -38,6 +38,7 @@
   "build": {
     "appId": "com.antigravity.cleanmac",
     "productName": "CleanMac",
+    "executableName": "CleanMac",
     "mac": {
       "target": [
         {
@@ -59,6 +60,7 @@
       "package.json"
     ],
     "files": [
+      "package.json",
       "main/**/*",
       ".next/standalone-final/**/*",
       "!**/*.ts",
