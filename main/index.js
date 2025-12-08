@@ -170,7 +170,9 @@ const createWindow = () => {
         height: 800,
         show: true, // Explicitly show the window
         center: true, // Explicitly center the window
-        titleBarStyle: 'hiddenInset', // Mac-like title bar
+        frame: false, // Frameless window
+        resizable: false, // Prevent manual resizing
+        titleBarStyle: 'hidden', // Hidden title bar
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
