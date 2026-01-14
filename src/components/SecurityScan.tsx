@@ -39,13 +39,13 @@ export default function SecurityScan() {
     const simulateScanning = async () => {
         const steps = [
             "Initializing vulnerability scanner...",
-            "Loading CVE database (v2025.12.19)...",
-            "Checking entitlement signatures...",
-            "Verifying kernel integrity...",
-            "Scanning running processes for injection...",
-            "Analyzing network packet headers...",
-            "Auditing filesystem permissions...",
-            "Heuristic analysis of Downloads folder...",
+            "Loading local CVE definitions...",
+            "Verifying mach-o signatures...",
+            "Analyzing process entitlements...",
+            "Scanning IPC channels...",
+            "Auditing packet headers...",
+            "Checking filesystem perms...",
+            "Heuristic analysis of Downloads...",
         ];
 
         for (let i = 0; i < steps.length; i++) {
