@@ -1,78 +1,31 @@
 {
   "name": "clean-mac-ui",
-  "version": "0.1.0",
   "private": true,
-  "main": "main/index.js",
   "productName": "CleanMac",
-  "description": "A modern macOS cleaning utility.",
+  "description": "A modern, professional macOS cleaning utility.",
   "author": "Antigravity",
+  "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint",
-    "electron:dev": "concurrently \"next dev\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron:build": "next build && node scripts/prepare-distribution.js && electron-builder"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2",
+    "framer-motion": "^12.23.26",
     "lucide-react": "^0.556.0",
-    "next": "^16.0.7",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
-    "systeminformation": "^5.27.11",
-    "tailwind-merge": "^3.4.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
-    "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "concurrently": "^9.1.0",
-    "electron": "^33.2.1",
-    "electron-builder": "^26.0.12",
-    "eslint": "^9",
-    "eslint-config-next": "16.0.7",
-    "typescript": "^5",
-    "wait-on": "^9.0.3"
-  },
-  "build": {
-    "appId": "com.antigravity.cleanmac",
-    "productName": "CleanMac",
-    "executableName": "CleanMac",
-    "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "arm64"
-          ]
-        }
-      ],
-      "category": "public.app-category.utilities",
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "icon": "build/icons/CleanMac.icns"
-    },
-    "asarUnpack": [
-      "server.js",
-      "node_modules/**/*",
-      ".next/**/*",
-      "package.json"
-    ],
-    "files": [
-      "package.json",
-      "main/**/*",
-      ".next/standalone-final/**/*",
-      "!**/*.ts",
-      "!*.map"
-    ],
-    "directories": {
-      "output": "dist"
-    }
-  },
-  "overrides": {
-    "glob": "^10.4.5",
-    "rimraf": "^6.0.0",
-    "inflight": "^1.0.6"
+    "@tauri-apps/cli": "^2",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4"
   }
 }

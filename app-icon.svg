@@ -1,0 +1,21 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1024" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0066CC"/>
+      <stop offset="1" stop-color="#003366"/>
+    </linearGradient>
+    <filter id="shadow" x="-50" y="-50" width="1124" height="1124" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="10" stdDeviation="20" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <rect x="50" y="50" width="924" height="924" rx="200" fill="url(#bg)"/>
+  
+  <g filter="url(#shadow)">
+    <!-- Shield Icon -->
+    <path d="M512 250 L250 350 V550 C250 750 512 900 512 900 C512 900 774 750 774 550 V350 L512 250 Z" fill="white" stroke="white" stroke-width="20" stroke-linejoin="round"/>
+    
+    <!-- Inner Checkmark/Pulse -->
+    <path d="M400 550 L480 630 L620 480" stroke="#003366" stroke-width="50" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+</svg>
